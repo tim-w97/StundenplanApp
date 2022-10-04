@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stundenplan_app/services/crawler.dart';
 import 'package:stundenplan_app/widgets/timetable.dart';
 
 class MainScreen extends StatelessWidget {
@@ -17,7 +18,9 @@ class MainScreen extends StatelessWidget {
                   Expanded(
                     child: MaterialButton(
                       color: Colors.blueGrey,
-                      onPressed: () {},
+                      onPressed: () {
+                        Crawler().fetchTimetable();
+                      },
                       child: const Text("Stundenplan"),
                     ),
                   ),
