@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stundenplan_app/services/crawler.dart';
+import 'package:stundenplan_app/widgets/day_dropdown.dart';
 import 'package:stundenplan_app/widgets/timetable.dart';
 
 class MainScreen extends StatelessWidget {
@@ -9,36 +10,23 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const DayDropdown(),
+              Row(
                 children: [
-                  Expanded(
-                    child: MaterialButton(
-                      color: Colors.blueGrey,
-                      onPressed: () {
-                        Crawler().fetchTimetable();
-                      },
-                      child: const Text("Stundenplan"),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: MaterialButton(
-                      color: Colors.blueGrey,
-                      onPressed: () {},
-                      child: const Text("Vertretungsplan"),
-                    ),
-                  ),
+                  Switch(value: false, onChanged: (bool? newValue) {}),
+                  const Text("Stundenplanänderungen"),
                 ],
               ),
-            ),
-            const Timetable(),
-          ],
+              const Expanded(
+                child: Timetable(),
+              ),
+            ],
+          ),
         ),
       ),
     );
