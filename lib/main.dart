@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Stundenplan-App',
       theme: ThemeData.dark(),
       routes: {
         "/": (context) => const MainScreen(),

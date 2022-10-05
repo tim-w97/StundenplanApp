@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:stundenplan_app/constants.dart';
 
 class DayDropdown extends StatefulWidget {
-  final List<String> days = const [
-    "Montag",
-    "Dienstag",
-    "Mittwoch",
-    "Donnerstag",
-    "Freitag",
-  ];
-
-  final Function(String day) onDayChange;
+  final Function(int dayIndex) onDayChange;
 
   const DayDropdown({Key? key, required this.onDayChange}) : super(key: key);
 
@@ -18,31 +11,32 @@ class DayDropdown extends StatefulWidget {
 }
 
 class _DayDropdownState extends State<DayDropdown> {
-  String? selectedDay;
+  int? selectedDay = DateTime.now().weekday - 1;
 
   @override
   void initState() {
-    selectedDay = widget.days.first;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
+    return DropdownButton<int>(
       value: selectedDay,
-      items: widget.days
-          .map((String day) => DropdownMenuItem(
-                value: day,
-                child: Text(day),
+      items: Constants.days
+          .asMap()
+          .entries
+          .map((MapEntry<int, String> entry) => DropdownMenuItem(
+                value: entry.key,
+                child: Text(entry.value),
               ))
           .toList(),
-      onChanged: (String? day) {
-        if (day == null) return;
+      onChanged: (int? dayIndex) {
+        if (dayIndex == null) return;
 
-        widget.onDayChange(day);
+        widget.onDayChange(dayIndex);
 
         setState(() {
-          selectedDay = day;
+          selectedDay = dayIndex;
         });
       },
     );

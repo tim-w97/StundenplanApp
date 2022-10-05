@@ -3,7 +3,7 @@ import 'package:stundenplan_app/models/timetable_entry_data.dart';
 import 'package:stundenplan_app/widgets/timetable_entry.dart';
 
 class Timetable extends StatelessWidget {
-  final Future<String> data;
+  final Future<List<TimetableEntryData>> data;
 
   const Timetable({Key? key, required this.data}) : super(key: key);
 
@@ -11,7 +11,8 @@ class Timetable extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: data,
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+      builder: (BuildContext context,
+          AsyncSnapshot<List<TimetableEntryData>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -22,8 +23,11 @@ class Timetable extends StatelessWidget {
           );
         }
 
-        return SingleChildScrollView(
-          child: Text(snapshot.data!),
+        return ListView.builder(
+          itemCount: snapshot.data!.length,
+          itemBuilder: (BuildContext context, int index) {
+            return TimetableEntry(data: snapshot.data![index]);
+          },
         );
       },
     );

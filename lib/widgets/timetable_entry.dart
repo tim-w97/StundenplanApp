@@ -9,14 +9,23 @@ class TimetableEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Theme.of(context).primaryColor,
       margin: const EdgeInsets.only(bottom: 10),
-      color: Colors.blueGrey,
       padding: const EdgeInsets.all(10),
       child: Column(
         children: [
-          Text(
-            "${data.event} (${data.type})",
-            style: const TextStyle(fontWeight: FontWeight.bold),
+          SizedBox(
+            height: 50,
+            child: Center(
+              child: Text(
+                "${data.event} (${data.type})",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey,
+                ),
+              ),
+            ),
           ),
           const Divider(),
           Text(data.professor),

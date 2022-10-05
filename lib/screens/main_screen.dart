@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stundenplan_app/constants.dart';
+import 'package:stundenplan_app/models/timetable_entry_data.dart';
 import 'package:stundenplan_app/services/crawler.dart';
 import 'package:stundenplan_app/widgets/course_dropdown.dart';
 import 'package:stundenplan_app/widgets/day_dropdown.dart';
@@ -13,22 +14,41 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  late Future<String> timetableData;
+  late Future<List<TimetableEntryData>> timetableData;
+
+  String lastSelectedCourseKey = Constants.courses.keys.first;
+  int lastSelectedDay = 0;
 
   Crawler crawler = Crawler();
 
   void changeCourse(String courseKey) {
+    lastSelectedCourseKey = courseKey;
+
     setState(() {
-      timetableData = crawler.fetchTimetable(courseKey: courseKey);
+      timetableData = crawler.fetchTimetable(
+        courseKey: courseKey,
+        dayIndex: lastSelectedDay,
+      );
     });
   }
 
-  void changeDay(String day) {}
+  void changeDay(int dayIndex) {
+    lastSelectedDay = dayIndex;
+
+    setState(() {
+      timetableData = crawler.fetchTimetable(
+        courseKey: lastSelectedCourseKey,
+        dayIndex: dayIndex,
+      );
+    });
+  }
 
   @override
   void initState() {
-    timetableData =
-        crawler.fetchTimetable(courseKey: Constants.courses.keys.first);
+    timetableData = crawler.fetchTimetable(
+      courseKey: Constants.courses.keys.first,
+      dayIndex: DateTime.now().weekday - 1,
+    );
     super.initState();
   }
 
@@ -49,9 +69,9 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               ),
               Row(
-                children: [
-                  Switch(value: false, onChanged: (bool? newValue) {}),
-                  const Text("Stundenplanänderungen"),
+                children: const [
+                  Switch(value: false, onChanged: null),
+                  Text("Stundenplanänderungen"),
                 ],
               ),
               Expanded(

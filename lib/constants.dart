@@ -5,4 +5,12 @@ class Constants {
     "Inf": "Informatik",
     "WI": "Wirtschaftsinformatik",
   };
+
+  static const List<String> days = [
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+  ];
 }
