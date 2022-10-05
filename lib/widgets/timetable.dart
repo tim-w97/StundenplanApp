@@ -3,10 +3,31 @@ import 'package:stundenplan_app/models/timetable_entry_data.dart';
 import 'package:stundenplan_app/widgets/timetable_entry.dart';
 
 class Timetable extends StatelessWidget {
-  const Timetable({Key? key}) : super(key: key);
+  final Future<String> data;
+
+  const Timetable({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: data,
+      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.data == null) {
+          return const Center(
+            child: Text("Es ist ein Fehler aufgetreten."),
+          );
+        }
+
+        return SingleChildScrollView(
+          child: Text(snapshot.data!),
+        );
+      },
+    );
+
     return ListView.builder(
       itemCount: 3,
       itemBuilder: (BuildContext context, int index) {

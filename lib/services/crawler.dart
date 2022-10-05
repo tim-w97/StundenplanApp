@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 class Crawler {
-  Future fetchTimetable() async {
+  Future<String> fetchTimetable({required String courseKey}) async {
     String uriString = "https://www.hof-university.de/index.php"
         "?type=1421771406"
         "&id=79"
         "&tx_stundenplan_stundenplan[controller]=Ajax"
         "&tx_stundenplan_stundenplan[action]=loadVorlesungen"
-        "&tx_stundenplan_stundenplan[studiengang]=MC"
+        "&tx_stundenplan_stundenplan[studiengang]=$courseKey"
         "&tx_stundenplan_stundenplan[semester]=3_WS_2022"
         "&tx_stundenplan_stundenplan[view]=alle"
         "&1664909491132";
@@ -24,9 +24,9 @@ class Crawler {
       );
     }
 
-    dynamic jsonData = jsonDecode(response.body);
-    String html = jsonData["vorlesungen"];
+    dynamic jsonData = await jsonDecode(response.body);
+    String html = await jsonData["vorlesungen"];
 
-    print(html);
+    return html;
   }
 }
