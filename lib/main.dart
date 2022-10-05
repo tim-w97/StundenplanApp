@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Stundenplan-App',
+      title: 'HAW Hof Stundenplan',
       theme: ThemeData.dark(),
       routes: {
         "/": (context) => const MainScreen(),
