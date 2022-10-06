@@ -1,43 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stundenplan_app/constants.dart';
+import 'package:stundenplan_app/providers/timetable_provider.dart';
 
-class CourseDropdown extends StatefulWidget {
-  final Function(String course) onCourseChange;
-
-  const CourseDropdown({Key? key, required this.onCourseChange})
-      : super(key: key);
-
-  @override
-  State<CourseDropdown> createState() => _CourseDropdownState();
-}
-
-class _CourseDropdownState extends State<CourseDropdown> {
-  String? selectedCourseKey;
-
-  @override
-  void initState() {
-    selectedCourseKey = Constants.courses.keys.first;
-    super.initState();
-  }
+class CourseDropdown extends StatelessWidget {
+  const CourseDropdown({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TimetableProvider timetableProvider = context.watch<TimetableProvider>();
+
     return DropdownButton(
-      value: selectedCourseKey,
+      value: timetableProvider.course,
       items: Constants.courses.keys
           .map((String courseKey) => DropdownMenuItem(
                 value: courseKey,
                 child: Text(Constants.courses[courseKey]!),
               ))
           .toList(),
-      onChanged: (String? courseKey) {
-        if (courseKey == null) return;
+      onChanged: (String? changedCourse) {
+        if (changedCourse == null) return;
 
-        widget.onCourseChange(courseKey);
-
-        setState(() {
-          selectedCourseKey = courseKey;
-        });
+        timetableProvider.changeCourse(to: changedCourse);
       },
     );
   }

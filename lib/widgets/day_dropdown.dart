@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stundenplan_app/constants.dart';
+import 'package:stundenplan_app/providers/timetable_provider.dart';
 
-class DayDropdown extends StatefulWidget {
-  final Function(int dayIndex) onDayChange;
-
-  const DayDropdown({Key? key, required this.onDayChange}) : super(key: key);
-
-  @override
-  State<DayDropdown> createState() => _DayDropdownState();
-}
-
-class _DayDropdownState extends State<DayDropdown> {
-  int? selectedDay = DateTime.now().weekday - 1;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+class DayDropdown extends StatelessWidget {
+  const DayDropdown({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    TimetableProvider timetableProvider = context.watch<TimetableProvider>();
+
     return DropdownButton<int>(
-      value: selectedDay,
+      value: timetableProvider.day,
       items: Constants.days
           .asMap()
           .entries
@@ -30,14 +20,10 @@ class _DayDropdownState extends State<DayDropdown> {
                 child: Text(entry.value),
               ))
           .toList(),
-      onChanged: (int? dayIndex) {
-        if (dayIndex == null) return;
+      onChanged: (int? changedDay) {
+        if (changedDay == null) return;
 
-        widget.onDayChange(dayIndex);
-
-        setState(() {
-          selectedDay = dayIndex;
-        });
+        timetableProvider.changeDay(to: changedDay);
       },
     );
   }
