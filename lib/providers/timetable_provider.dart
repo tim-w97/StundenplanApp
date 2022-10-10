@@ -6,7 +6,7 @@ import 'package:stundenplan_app/services/crawler.dart';
 class TimetableProvider with ChangeNotifier {
   bool timetableChangesAreVisible = false;
 
-  int day = DateTime.now().weekday - 1;
+  late int day;
   String course = "MC";
 
   late Future<List<TimetableEntryData>> timetableData;
@@ -15,6 +15,7 @@ class TimetableProvider with ChangeNotifier {
   Crawler crawler = Crawler();
 
   TimetableProvider() {
+    day = _dayIndex;
     _setTimetable();
   }
 
@@ -46,5 +47,14 @@ class TimetableProvider with ChangeNotifier {
   void setTimetableChangesVisibilityTo(bool newValue) {
     timetableChangesAreVisible = newValue;
     notifyListeners();
+  }
+
+  int get _dayIndex {
+    int weekday = DateTime.now().weekday;
+
+    // if current day is weekend, set day to monday
+    if (weekday > 5) weekday = 1;
+
+    return weekday - 1;
   }
 }
