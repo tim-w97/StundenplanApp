@@ -21,7 +21,13 @@ class Timetable extends StatelessWidget {
 
         if (snapshot.data == null) {
           return const Center(
-            child: Text("Es ist ein Fehler aufgetreten."),
+            child: Text("Es ist ein Fehler aufgetreten. 😪"),
+          );
+        }
+
+        if (snapshot.data!.isEmpty) {
+          return const Center(
+            child: Text("An diesem Tag finden keine Vorlesungen statt. 😎"),
           );
         }
 
