@@ -9,9 +9,12 @@ class TimetableChangeEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).primaryColor,
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Column(
         children: [
           SizedBox(
