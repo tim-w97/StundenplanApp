@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:stundenplan_app/models/timetable_entry_data.dart';
 import 'package:stundenplan_app/providers/timetable_provider.dart';
+import 'package:stundenplan_app/widgets/loading_animation.dart';
 import 'package:stundenplan_app/widgets/timetable_entry.dart';
 
 class Timetable extends StatelessWidget {
@@ -17,7 +17,7 @@ class Timetable extends StatelessWidget {
       builder: (BuildContext context,
           AsyncSnapshot<List<TimetableEntryData>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Lottie.asset("assets/teacher.json");
+          return const LoadingAnimation();
         }
 
         if (snapshot.data == null) {
