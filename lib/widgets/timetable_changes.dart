@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:stundenplan_app/models/timetable_change_entry_data.dart';
 import 'package:stundenplan_app/providers/timetable_provider.dart';
@@ -16,7 +17,7 @@ class TimetableChanges extends StatelessWidget {
       builder: (BuildContext context,
           AsyncSnapshot<List<TimetableChangeEntryData>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return Lottie.asset("assets/processing.json");
         }
 
         if (snapshot.data == null) {
