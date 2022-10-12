@@ -23,11 +23,18 @@ class Crawler {
       List<String> cellValues =
           cells.map((Element cell) => cell.text.trim()).toList();
 
+      String missedDate = cellValues[3].replaceAll(" ", "");
+      String newDate = cellValues[4].replaceAll(" ", "");
+
+      if (newDate.isEmpty) {
+        newDate = "Fällt aus. 😪";
+      }
+
       return TimetableChangeEntryData(
         event: cellValues[1],
         professor: cellValues[2],
-        missedDate: cellValues[3].replaceAll(" ", ""),
-        newDate: cellValues[4].replaceAll(" ", ""),
+        missedDate: missedDate,
+        newDate: newDate,
       );
     }).toList();
 

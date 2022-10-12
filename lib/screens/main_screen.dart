@@ -14,6 +14,12 @@ class MainScreen extends StatelessWidget {
     TimetableProvider timetableProvider = context.watch<TimetableProvider>();
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.sync),
+        onPressed: () {
+          timetableProvider.fetchTimetable();
+        },
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10),

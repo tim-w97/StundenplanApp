@@ -31,19 +31,6 @@ class TimetableProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void _setTimetable() {
-    // fetch both timetable and timetable changes
-
-    timetableData = crawler.fetchTimetable(
-      courseKey: course,
-      dayIndex: day,
-    );
-
-    timetableChangesData = crawler.fetchTimetableChanges(
-      courseKey: course,
-    );
-  }
-
   void setTimetableChangesVisibilityTo(bool newValue) {
     timetableChangesAreVisible = newValue;
     notifyListeners();
@@ -56,5 +43,23 @@ class TimetableProvider with ChangeNotifier {
     if (weekday > 5) weekday = 1;
 
     return weekday - 1;
+  }
+
+  void fetchTimetable() {
+    _setTimetable();
+    notifyListeners();
+  }
+
+  void _setTimetable() {
+    // fetch both timetable and timetable changes
+
+    timetableData = crawler.fetchTimetable(
+      courseKey: course,
+      dayIndex: day,
+    );
+
+    timetableChangesData = crawler.fetchTimetableChanges(
+      courseKey: course,
+    );
   }
 }
